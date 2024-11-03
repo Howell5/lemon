@@ -1,0 +1,31 @@
+{
+  "name": "lemon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sh scripts/dev.sh",
+    "dev:clean": "sh scripts/clean.sh",
+    "build": "sh scripts/build.sh",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts"
+  },
+  "keywords": [],
+  "author": "howell5",
+  "license": "ISC",
+  "packageManager": "pnpm@8.15.4+sha1.c85a4305534f76d461407b59277b954bac97b5c4",
+  "devDependencies": {
+    "@types/node": "^22.8.7",
+    "@types/pg": "^8.11.10",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@typescript-eslint/parser": "^8.12.2",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.27.1",
+    "drizzle-orm": "^0.36.0",
+    "eslint": "^9.14.0",
+    "pg": "^8.13.1",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
