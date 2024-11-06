@@ -8,7 +8,8 @@
     "dev:clean": "sh scripts/clean.sh",
     "build": "sh scripts/build.sh",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts"
+    "db:migrate": "tsx scripts/migrate.ts",
+    "seed": "tsx scripts/seed.ts"
   },
   "keywords": [],
   "author": "howell5",
