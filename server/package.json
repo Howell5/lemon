@@ -11,6 +11,7 @@
   "author": "howell5",
   "license": "ISC",
   "dependencies": {
+    "@hono/node-server": "^1.13.4",
     "hono": "^4.6.8",
     "postgres": "^3.4.5"
   },

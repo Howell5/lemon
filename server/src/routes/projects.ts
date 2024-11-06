@@ -1,4 +1,3 @@
-// src/routes/projects.ts
 import { Hono } from 'hono'
 import { projectController } from '../controllers/projects'
 

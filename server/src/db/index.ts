@@ -1,12 +1,12 @@
-// src/db/index.ts
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
-import * as schema from './schema'
+import { drizzle } from 'drizzle-orm/node-postgres'
+import { Pool } from 'pg'
 
-const connectionString = 'postgres://postgres:postgres@localhost:5432/i18n'
+const pool = new Pool({
+  host: 'localhost',
+  port: 5432,
+  user: 'postgres',
+  password: 'postgres',
+  database: 'i18n',
+})
 
-// 创建 postgres 连接
-const client = postgres(connectionString)
-
-// 创建 drizzle 实例
-export const db = drizzle(client, { schema })
+export const db = drizzle(pool)
