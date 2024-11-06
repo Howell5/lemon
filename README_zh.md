@@ -4,10 +4,10 @@
 
 > 一个现代化的国际化翻译管理系统 —— 让多语言开发不再酸涩。
 
-[![TypeScript][]](https://www.typescriptlang.org/)
-[![Nuxt][]](https://nuxt.com/)
-[![Hono][]](https://hono.dev/)
-[![PostgreSQL][]](https://www.postgresql.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Nuxt](https://img.shields.io/badge/Nuxt-3.13-00DC82?logo=nuxt.js)](https://nuxt.com/)
+[![Hono](https://img.shields.io/badge/Hono-4.6-E36002?logo=hono)](https://hono.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
 </div>
 
