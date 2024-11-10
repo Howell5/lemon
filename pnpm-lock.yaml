@@ -53,6 +53,9 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.6.1
         version: 0.6.1(typescript@5.6.3)(vue@3.5.12)
+      '@tanstack/vue-query':
+        specifier: ^5.59.20
+        version: 5.59.20(vue@3.5.12)
       '@vueuse/nuxt':
         specifier: ^11.2.0
         version: 11.2.0(nuxt@3.13.2)(vue@3.5.12)
@@ -2455,6 +2458,33 @@ packages:
   /@sindresorhus/merge-streams@2.3.0:
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
+    dev: false
+
+  /@tanstack/match-sorter-utils@8.19.4:
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
+    engines: {node: '>=12'}
+    dependencies:
+      remove-accents: 0.5.0
+    dev: false
+
+  /@tanstack/query-core@5.59.20:
+    resolution: {integrity: sha512-e8vw0lf7KwfGe1if4uPFhvZRWULqHjFcz3K8AebtieXvnMOz5FSzlZe3mTLlPuUBcydCnBRqYs2YJ5ys68wwLg==}
+    dev: false
+
+  /@tanstack/vue-query@5.59.20(vue@3.5.12):
+    resolution: {integrity: sha512-kIs1GfXh7jVLycbnQDghfdrcvrZz5fxnMF7eAAp8O3ZfhHQWfP57DBXbOvww4Y+TI0EvVoh+hihX+LNFBGFKLg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.2
+      vue: ^2.6.0 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.19.4
+      '@tanstack/query-core': 5.59.20
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.12(typescript@5.6.3)
+      vue-demi: 0.14.10(vue@3.5.12)
     dev: false
 
   /@trysound/sax@0.2.0:
@@ -6745,6 +6775,10 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       redis-errors: 1.2.0
+    dev: false
+
+  /remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
     dev: false
 
   /replace-in-file@6.3.5:
