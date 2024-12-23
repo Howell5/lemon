@@ -1,8 +1,6 @@
 <template>
   <div>
-    <main>
-      <slot />
-    </main>
+    <h1>翻译编辑器</h1>
   </div>
 </template>
 

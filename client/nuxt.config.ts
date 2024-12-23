@@ -1,8 +1,15 @@
+import Aura from '@primevue/themes/aura'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vueuse/nuxt'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@unocss/nuxt',
+    '@vueuse/nuxt',
+    '@primevue/nuxt-module',
+  ],
 
   runtimeConfig: {
     public: {
@@ -26,6 +33,14 @@ export default defineNuxtConfig({
 
   alias: {
     '@': '../',
+  },
+
+  primevue: {
+    options: {
+      theme: {
+        preset: Aura,
+      },
+    },
   },
 
   compatibilityDate: '2024-11-03',

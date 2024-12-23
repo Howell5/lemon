@@ -3,9 +3,8 @@
     <h1>{{ project?.name }}</h1>
     <div>{{ project?.description }}</div>
 
-    <div>
-      <Button>编辑</Button>
-      <Button>删除</Button>
+    <div class="flex flex-col gap-4">
+      <KeyTree />
     </div>
   </div>
 </template>

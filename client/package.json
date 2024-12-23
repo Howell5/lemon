@@ -12,10 +12,18 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@pinia/nuxt": "^0.6.1",
+    "@primevue/themes": "^4.2.5",
     "@tanstack/vue-query": "^5.59.20",
     "@vueuse/nuxt": "^11.2.0",
     "nuxt": "^3.13.2",
+    "primevue": "^4.2.5",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@primevue/nuxt-module": "^4.2.5",
+    "@unocss/nuxt": "^0.65.2",
+    "@unocss/preset-rem-to-px": "^0.65.2",
+    "unocss": "^0.65.2"
   }
 }

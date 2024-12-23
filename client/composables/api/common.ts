@@ -1,5 +1,4 @@
-// client/api/common.ts
-import type { ApiResponse } from '@/types/api/response'
+// import type { ApiResponse } from '@/types/api/response'
 
 export const createApi = () => {
   const config = useRuntimeConfig()
@@ -27,22 +26,22 @@ export const createApi = () => {
   }
 
   return {
-    get: <T>(endpoint: string) => fetchApi<ApiResponse<T>>(endpoint),
+    get: <T>(endpoint: string) => fetchApi<T>(endpoint),
 
     post: <T>(endpoint: string, data: unknown) =>
-      fetchApi<ApiResponse<T>>(endpoint, {
+      fetchApi<T>(endpoint, {
         method: 'POST',
         body: JSON.stringify(data),
       }),
 
     put: <T>(endpoint: string, data: unknown) =>
-      fetchApi<ApiResponse<T>>(endpoint, {
+      fetchApi<T>(endpoint, {
         method: 'PUT',
         body: JSON.stringify(data),
       }),
 
     delete: <T>(endpoint: string) =>
-      fetchApi<ApiResponse<T>>(endpoint, {
+      fetchApi<T>(endpoint, {
         method: 'DELETE',
       }),
   }

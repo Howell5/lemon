@@ -25,8 +25,8 @@ export class ProjectController {
 
   async findOne(c: Context) {
     try {
-      const id = Number(c.req.param('id'))
-      const project = await projectService.findOne(id)
+      const slug = c.req.param('slug')
+      const project = await projectService.findOne(slug)
       if (!project) {
         return c.json({ message: 'Project not found' }, 404)
       }
@@ -38,9 +38,9 @@ export class ProjectController {
 
   async update(c: Context) {
     try {
-      const id = Number(c.req.param('id'))
+      const slug = c.req.param('slug')
       const body = await c.req.json<Partial<UpdateProjectDto>>()
-      const project = await projectService.update(id, body)
+      const project = await projectService.update(slug, body)
       if (!project) {
         return c.json({ message: 'Project not found' }, 404)
       }
@@ -52,8 +52,8 @@ export class ProjectController {
 
   async delete(c: Context) {
     try {
-      const id = Number(c.req.param('id'))
-      const project = await projectService.delete(id)
+      const slug = c.req.param('slug')
+      const project = await projectService.delete(slug)
       if (!project) {
         return c.json({ message: 'Project not found' }, 404)
       }

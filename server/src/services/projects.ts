@@ -5,6 +5,10 @@ import { CreateProjectDto, UpdateProjectDto } from '../types/project'
 
 export class ProjectService {
   async create(data: CreateProjectDto) {
+    const slug = await this.findOne(data.slug)
+    if (slug) {
+      throw new Error('Slug already exists')
+    }
     const [project] = await db.insert(projects).values(data).returning()
     return project
   }
@@ -13,22 +17,28 @@ export class ProjectService {
     return await db.select().from(projects)
   }
 
-  async findOne(id: number) {
-    const [project] = await db.select().from(projects).where(eq(projects.id, id))
+  async findOne(slug: string) {
+    const [project] = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.slug, slug))
     return project
   }
 
-  async update(id: number, data: Partial<UpdateProjectDto>) {
+  async update(slug: string, data: Partial<UpdateProjectDto>) {
     const [project] = await db
       .update(projects)
       .set({ ...data, updatedAt: new Date() })
-      .where(eq(projects.id, id))
+      .where(eq(projects.slug, slug))
       .returning()
     return project
   }
 
-  async delete(id: number) {
-    const [project] = await db.delete(projects).where(eq(projects.id, id)).returning()
+  async delete(slug: string) {
+    const [project] = await db
+      .delete(projects)
+      .where(eq(projects.slug, slug))
+      .returning()
     return project
   }
 }
