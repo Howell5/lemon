@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col gap-4 w-350">
     <h1>KeyTree</h1>
     <Tree :data="data" />
   </div>

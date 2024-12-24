@@ -1,5 +1,24 @@
 // schema.ts
-import { pgTable, integer, serial, text, timestamp, varchar, json } from 'drizzle-orm/pg-core'
+import {
+  pgTable,
+  integer,
+  serial,
+  text,
+  timestamp,
+  varchar,
+  json,
+} from 'drizzle-orm/pg-core'
+
+// export enum Locale {
+//   EN = 'en',
+//   ZH = 'zh',
+//   FR = 'fr',
+//   DE = 'de',
+//   ES = 'es',
+//   IT = 'it',
+//   JA = 'ja',
+//   KO = 'ko',
+// }
 
 // 项目表
 export const projects = pgTable('projects', {
@@ -18,18 +37,12 @@ export const translations = pgTable('translations', {
   id: serial('id').primaryKey(),
   projectId: integer('project_id').references(() => projects.id),
   key: varchar('key', { length: 255 }).notNull(),
-  namespace: varchar('namespace', { length: 100 }),
-  translations: json('translations').$type<Record<string, TranslationValue>>().notNull(),
+  // one of enum Locale type
+  locale: varchar('locale', { length: 30 }).notNull(),
+  // string
+  translation: varchar('translation', { length: 255 }).notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
-
-// 翻译值的类型定义
-type TranslationValue = {
-  value: string
-  status: 'manual' | 'auto' | 'pending' | 'empty'
-  lastModified: string
-  modifiedBy?: string
-}
 
 // TODO: 审计日志表 和 变更历史表, for 二期
