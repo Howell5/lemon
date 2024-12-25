@@ -6,13 +6,19 @@ export const useTranslationApi = () => {
 
   return {
     list(projectId: number) {
-      return api.get<Translation[]>(`/api/projects/${projectId}/translations`)
+      return api.get<Translation[]>(`/api/translations/list`, {
+        params: {
+          projectId,
+        },
+      })
     },
 
-    get(projectId: number, id: number) {
-      return api.get<Translation>(
-        `/api/projects/${projectId}/translations/${id}`
-      )
+    get(projectId: number, key: string) {
+      return api.get<Translation>(`/api/translations/${key}`, {
+        params: {
+          projectId,
+        },
+      })
     },
 
     create(projectId: number, data: Partial<Translation>) {

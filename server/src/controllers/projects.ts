@@ -2,6 +2,7 @@
 import { Context } from 'hono'
 import { projectService } from '../services/projects'
 import { CreateProjectDto, UpdateProjectDto } from '../types/project'
+import { translationService } from '../services/translations'
 
 export class ProjectController {
   async create(c: Context) {
@@ -48,6 +49,19 @@ export class ProjectController {
     } catch (error) {
       return c.json({ message: error.message }, 400)
     }
+  }
+
+  async findTranslations(c: Context) {
+    // console.log({
+    //   req: c.req,
+    // })
+
+    const projectName = c.req.query('projectName')
+    if (!projectName) {
+      return c.json({ message: 'Project name is required' }, 400)
+    }
+    const translations = await translationService.findAll(projectName)
+    return c.json(translations)
   }
 
   async delete(c: Context) {

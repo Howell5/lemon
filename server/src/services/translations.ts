@@ -2,7 +2,7 @@
 
 import { db } from '../db'
 import { eq } from 'drizzle-orm'
-import { translations } from '../db/schema'
+import { projects, translations } from '../db/schema'
 import {
   CreateTranslationDto,
   UpdateTranslationDto,
@@ -20,6 +20,25 @@ export class TranslationService {
       .set(dto)
       .where(eq(translations.key, key))
     return translation
+  }
+
+  async findAll(slug: string) {
+    const project = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.slug, slug))
+      .then(([project]) => project)
+
+    if (!project) {
+      throw new Error('Project not found')
+    }
+
+    const list = await db
+      .select()
+      .from(translations)
+      .where(eq(translations.projectId, project.id))
+
+    return list
   }
 }
 

@@ -9,19 +9,10 @@ export interface Translation {
   id: number
   projectId: number
   key: string
-  sourceText: string
-  translations: Record<string, TranslationItem>
+  translation: string
   context?: string
-  tags?: string[]
   createdAt: string
   updatedAt: string
-}
-
-export interface TranslationItem {
-  text: string
-  status: TranslationStatus
-  lastModified: string
-  comments?: TranslationComment[]
 }
 
 export enum TranslationStatus {

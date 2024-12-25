@@ -5,8 +5,9 @@ const projects = new Hono()
 
 projects.post('/', projectController.create)
 projects.get('/', projectController.findAll)
-projects.get('/:slug', projectController.findOne)
-projects.put('/:slug', projectController.update)
-projects.delete('/:slug', projectController.delete)
+projects.get('/get', projectController.findOne)
+projects.put('/update', projectController.update)
+projects.delete('/delete', projectController.delete)
+projects.get('/translations', projectController.findTranslations)
 
 export default projects
