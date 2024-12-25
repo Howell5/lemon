@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS "projects" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "translations" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"project_id" serial NOT NULL,
+	"project_id" integer,
 	"key" varchar(255) NOT NULL,
-	"namespace" varchar(100),
-	"translations" json NOT NULL,
+	"locale" varchar(30) NOT NULL,
+	"translation" varchar(255) NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );

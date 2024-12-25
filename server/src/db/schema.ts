@@ -36,11 +36,11 @@ export const projects = pgTable('projects', {
 export const translations = pgTable('translations', {
   id: serial('id').primaryKey(),
   projectId: integer('project_id').references(() => projects.id),
-  key: varchar('key', { length: 255 }).notNull(),
+  key: text('key').notNull(),
   // one of enum Locale type
   locale: varchar('locale', { length: 30 }).notNull(),
   // string
-  translation: varchar('translation', { length: 255 }).notNull(),
+  translation: text('translation').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })

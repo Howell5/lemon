@@ -58,7 +58,7 @@ export class TranslationController {
           throw new Error('Invalid JSON file')
         }
       } catch (error) {
-        return c.json({ message: 'Invalid JSON file' }, 400)
+        return c.json({ message: 'Invalid JSON file', code: 400 })
       }
 
       const project = await projectService.findOne(projectName)
@@ -68,17 +68,20 @@ export class TranslationController {
 
       const flattened = flatten(json)
       for (const [key, value] of Object.entries(flattened)) {
-        await translationService.create({
+        const payload = {
           projectId: project.id,
           key,
           translation: value,
           locale,
-        })
+        }
+
+        console.log('0000000000000000000', payload)
+        await translationService.create(payload)
       }
 
       return c.json({ message: 'Translations uploaded successfully' })
     } catch (error) {
-      return c.json({ message: error.message }, 500)
+      return c.json({ message: error.message, code: 500 })
     }
   }
 }
