@@ -42,7 +42,7 @@ pnpm install
 # 配置环境变量
 cp .env.example .env
 
-# 数据库结构同步
+# 数据库结构生成
 pnpm db:generate
 
 # 数据库迁移

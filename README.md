@@ -40,6 +40,9 @@ pnpm install
 # Configure environment variables
 cp .env.example .env
 
+# Run database generate
+pnpm db:generate
+
 # Run database migrations
 pnpm db:migrate
 
