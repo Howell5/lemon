@@ -5,61 +5,78 @@ export const useTranslationApi = () => {
   const api = createApi()
 
   return {
-    list(projectId: number) {
-      return api.get<Translation[]>(`/api/translations/list`, {
-        params: {
-          projectId,
-        },
+    list({
+      projectName,
+      locale,
+      key,
+    }: {
+      projectName: string
+      locale?: string
+      key?: string
+    }) {
+      return api.post<Translation[]>(`/api/translation/list`, {
+        projectName,
+        locale,
+        key,
       })
     },
 
-    get(projectId: number, key: string) {
-      return api.get<Translation>(`/api/translations/${key}`, {
-        params: {
-          projectId,
-        },
+    get({
+      projectName,
+      locale,
+      key,
+    }: {
+      projectName: string
+      locale?: string
+      key?: string
+    }) {
+      return api.get<Translation>(`/api/translation`, {
+        projectName,
+        locale,
+        key,
       })
     },
 
     create(projectId: number, data: Partial<Translation>) {
       return api.post<Translation>(
-        `/api/projects/${projectId}/translations`,
+        `/api/projects/${projectId}/translation`,
         data
       )
     },
 
     update(projectId: number, id: number, data: Partial<Translation>) {
       return api.put<Translation>(
-        `/api/projects/${projectId}/translations/${id}`,
+        `/api/projects/${projectId}/translation/${id}`,
         data
       )
     },
 
     delete(projectId: number, id: number) {
-      return api.delete<void>(`/api/projects/${projectId}/translations/${id}`)
+      return api.delete<void>(`/api/projects/${projectId}/translation/${id}`)
     },
 
     // 批量操作
     batchUpdate(projectId: number, translations: Partial<Translation>[]) {
       return api.put<Translation[]>(
-        `/api/projects/${projectId}/translations/batch`,
+        `/api/projects/${projectId}/translation/batch`,
         translations
       )
     },
 
     // 导入导出
-    import(projectId: number, file: File) {
+    import(projectName: string, file: File, locale: string) {
       const formData = new FormData()
       formData.append('file', file)
+      formData.append('projectName', projectName)
+      formData.append('locale', locale)
 
-      return api.post<{ count: number }>(
-        `/api/projects/${projectId}/translations/import`,
-        formData
-      )
+      return api.post<{ count: number }>(`/api/translation/import`, formData)
     },
 
-    export(projectId: number) {
-      return api.get<Blob>(`/api/projects/${projectId}/translations/export`)
+    export(projectName: string) {
+      return api.get<Blob>(`/api/translation/export`, {
+        projectName,
+      })
     },
   }
 }

@@ -26,7 +26,10 @@ export class ProjectController {
 
   async findOne(c: Context) {
     try {
-      const slug = c.req.param('slug')
+      const slug = c.req.query('slug')
+      if (!slug) {
+        return c.json({ message: 'Slug is required' }, 400)
+      }
       const project = await projectService.findOne(slug)
       if (!project) {
         return c.json({ message: 'Project not found' }, 404)
@@ -42,32 +45,6 @@ export class ProjectController {
       const slug = c.req.param('slug')
       const body = await c.req.json<Partial<UpdateProjectDto>>()
       const project = await projectService.update(slug, body)
-      if (!project) {
-        return c.json({ message: 'Project not found' }, 404)
-      }
-      return c.json(project)
-    } catch (error) {
-      return c.json({ message: error.message }, 400)
-    }
-  }
-
-  async findTranslations(c: Context) {
-    // console.log({
-    //   req: c.req,
-    // })
-
-    const projectName = c.req.query('projectName')
-    if (!projectName) {
-      return c.json({ message: 'Project name is required' }, 400)
-    }
-    const translations = await translationService.findAll(projectName)
-    return c.json(translations)
-  }
-
-  async delete(c: Context) {
-    try {
-      const slug = c.req.param('slug')
-      const project = await projectService.delete(slug)
       if (!project) {
         return c.json({ message: 'Project not found' }, 404)
       }

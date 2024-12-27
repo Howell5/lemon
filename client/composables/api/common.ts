@@ -26,7 +26,16 @@ export const createApi = () => {
   }
 
   return {
-    get: <T>(endpoint: string) => fetchApi<T>(endpoint),
+    get: <T>(endpoint: string, params?: Record<string, any>) => {
+      const queryString = Object.entries(params || {})
+        .filter(([_, value]) => value !== undefined)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&')
+
+      return fetchApi<T>(`${endpoint}?${queryString}`, {
+        method: 'GET',
+      })
+    },
 
     post: <T>(endpoint: string, data: unknown) =>
       fetchApi<T>(endpoint, {

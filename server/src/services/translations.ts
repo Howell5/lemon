@@ -1,7 +1,7 @@
 // services/translations.ts
 
 import { db } from '../db'
-import { eq } from 'drizzle-orm'
+import { eq, and } from 'drizzle-orm'
 import { projects, translations } from '../db/schema'
 import {
   CreateTranslationDto,
@@ -22,7 +22,8 @@ export class TranslationService {
     return translation
   }
 
-  async findAll(slug: string) {
+  async findAll(slug: string, locale?: string) {
+    // locale is optional
     const project = await db
       .select()
       .from(projects)
@@ -36,7 +37,13 @@ export class TranslationService {
     const list = await db
       .select()
       .from(translations)
-      .where(eq(translations.projectId, project.id))
+      // if locale is provided, filter by locale
+      .where(
+        and(
+          eq(translations.projectId, project.id),
+          locale ? eq(translations.locale, locale) : undefined
+        )
+      )
 
     return list
   }

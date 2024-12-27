@@ -31,6 +31,30 @@ export class TranslationController {
     }
   }
 
+  async findTranslations(c: Context) {
+    const body = await c.req.json<{ projectName: string; locale: string }>()
+
+    const { projectName, locale } = body
+    if (!projectName) {
+      return c.json({ message: 'Project name is required' }, 400)
+    }
+    const translations = await translationService.findAll(projectName, locale)
+    return c.json(translations)
+  }
+
+  async delete(c: Context) {
+    try {
+      const slug = c.req.param('slug')
+      const project = await projectService.delete(slug)
+      if (!project) {
+        return c.json({ message: 'Project not found' }, 404)
+      }
+      return c.json(project)
+    } catch (error) {
+      return c.json({ message: error.message }, 400)
+    }
+  }
+
   async setTranslationByFile(c: Context) {
     try {
       const formData = await c.req.formData()

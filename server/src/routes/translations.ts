@@ -8,6 +8,7 @@ translations.post('/', translationController.create)
 // translations.get('/:id', translationController.findOne)
 translations.put('/:key', translationController.update)
 // translations.delete('/:id', translationController.delete)
+translations.post('/list', translationController.findTranslations)
 
 translations.post('/upload', translationController.setTranslationByFile)
 

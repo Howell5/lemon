@@ -6,23 +6,23 @@ export const useProjectApi = () => {
 
   return {
     list() {
-      return api.get<Project[]>('/api/projects')
+      return api.get<Project[]>('/api/project')
     },
 
     get(slug: string) {
-      return api.get<Project>(`/api/projects/${slug}`)
+      return api.get<Project>(`/api/project/get`, { slug })
     },
 
     create(data: Partial<Project>) {
-      return api.post<Project>('/api/projects', data)
+      return api.post<Project>('/api/project', data)
     },
 
     update(slug: string, data: Partial<Project>) {
-      return api.put<Project>(`/api/projects/${slug}`, data)
+      return api.put<Project>(`/api/project/${slug}`, data)
     },
 
     delete(slug: string) {
-      return api.delete<void>(`/api/projects/${slug}`)
+      return api.delete<void>(`/api/project/${slug}`)
     },
   }
 }

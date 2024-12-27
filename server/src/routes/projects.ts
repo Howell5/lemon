@@ -7,7 +7,6 @@ projects.post('/', projectController.create)
 projects.get('/', projectController.findAll)
 projects.get('/get', projectController.findOne)
 projects.put('/update', projectController.update)
-projects.delete('/delete', projectController.delete)
-projects.get('/translations', projectController.findTranslations)
+// projects.delete('/delete', projectController.delete)
 
 export default projects
