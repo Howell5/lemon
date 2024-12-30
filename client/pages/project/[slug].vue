@@ -10,6 +10,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'project',
+})
 const route = useRoute()
 
 const slug = route.params.slug as string

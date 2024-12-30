@@ -1,13 +1,12 @@
 <template>
   <div class="flex flex-col gap-4 w-350">
-    <h1>KeyTree</h1>
     <Tree :value="treeNodes" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Tree, { type TreeProps } from 'primevue/tree'
-import { isObject } from 'lodash-es'
+import isObject from 'lodash-es/isObject'
 import { unFlatten } from '../../utils/index'
 const slug = useRoute().params.slug as string
 
