@@ -1,6 +1,26 @@
 <template>
-  <div class="flex flex-col gap-4 w-350">
-    <Tree :value="treeNodes" />
+  <div class="flex flex-col gap-4">
+    <Tree
+      v-model:selectionKeys="selectedKey"
+      :value="treeNodes"
+      selectionMode="single"
+      :metaKeySelection="true"
+    />
+    <!-- <ul v-for="item in treeNodes" :key="item.key">
+      <template v-if="item.children">
+        <div>
+          <span>{{ item.label }}</span>
+          <ul>
+            <li v-for="child in item.children" :key="child.key">
+              {{ child.label }}
+            </li>
+          </ul>
+        </div>
+      </template>
+      <template v-else>
+        <li>{{ item.label }}</li>
+      </template>
+    </ul> -->
   </div>
 </template>
 
@@ -11,6 +31,8 @@ import { unFlatten } from '../../utils/index'
 const slug = useRoute().params.slug as string
 
 const { data } = useTranslation(slug, { locale: 'en' })
+
+const selectedKey = ref<string[]>([])
 
 const list = computed(() => {
   return data.value?.reduce((acc, item) => {

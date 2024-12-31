@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   ],
 
   imports: {
-    dirs: ['composables/**', 'utils/**', 'stores/**'],
+    dirs: ['composables/**', 'utils/**', 'store/**'],
   },
 
   pinia: {
