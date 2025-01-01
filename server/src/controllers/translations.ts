@@ -42,6 +42,19 @@ export class TranslationController {
     return c.json(translations)
   }
 
+  async findByKey(c: Context) {
+    const body = await c.req.json<{ projectName: string; key: string }>()
+
+    const { projectName, key } = body
+
+    if (!projectName) {
+      return c.json({ message: 'project name is required' }, 400)
+    }
+
+    const translation = await translationService.findAllByKey(projectName, key)
+    return c.json(translation)
+  }
+
   async delete(c: Context) {
     try {
       const slug = c.req.param('slug')

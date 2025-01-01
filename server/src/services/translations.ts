@@ -47,6 +47,27 @@ export class TranslationService {
 
     return list
   }
+
+  async findAllByKey(slug: string, key: string) {
+    const project = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.slug, slug))
+      .then(([project]) => project)
+
+    if (!project) {
+      throw new Error('Project not found')
+    }
+
+    const list = await db
+      .select()
+      .from(translations)
+      .where(
+        and(eq(translations.projectId, project.id), eq(translations.key, key))
+      )
+
+    return list
+  }
 }
 
 export const translationService = new TranslationService()

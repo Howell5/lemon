@@ -16,6 +16,12 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE || 'http://localhost:5000',
     },
   },
+
+  devServer: {
+    host: 'local.lemon.me',
+    port: 3000,
+  },
+
   components: [
     {
       path: '~/components',

@@ -9,6 +9,7 @@ export interface Translation {
   id: number
   projectId: number
   key: string
+  locale: string
   translation: string
   context?: string
   createdAt: string

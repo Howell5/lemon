@@ -51,6 +51,13 @@ export const useTranslationApi = () => {
       )
     },
 
+    getByKey({ projectName, key }: { projectName: string; key: string }) {
+      return api.post<Translation[]>(`/api/translation/key`, {
+        projectName,
+        key,
+      })
+    },
+
     delete(projectId: number, id: number) {
       return api.delete<void>(`/api/projects/${projectId}/translation/${id}`)
     },

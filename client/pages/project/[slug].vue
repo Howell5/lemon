@@ -10,7 +10,7 @@
         <KeyTree />
       </div>
     </div>
-    <div class="flex-1">
+    <div class="h-[calc(100dvh-120px)] flex-1">
       <TranslateEditor :current-key="projectStore?.currentKey" />
     </div>
   </div>

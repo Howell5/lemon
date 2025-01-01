@@ -25,17 +25,24 @@ export const useProject = (slugRef: MaybeRef<string>) => {
   }
 }
 
-export const useProjectTranslations = (projectNameRef: MaybeRef<string>) => {
+export const useProjectTranslations = (
+  projectNameRef: MaybeRef<string>,
+  locale?: string
+) => {
   const translationApi = useTranslationApi()
   const { data } = useQuery({
     queryKey: computed(() => [
       'project-translations',
-      { projectName: toValue(projectNameRef) },
+      { projectName: toValue(projectNameRef), locale },
     ]),
     queryFn: async () => {
       const projectName = toValue(projectNameRef)
-      const data = await translationApi.list(projectName)
+      const data = await translationApi.list({ projectName, locale })
       return data
     },
   })
+
+  return {
+    data,
+  }
 }

@@ -28,11 +28,38 @@
 import Tree, { type TreeProps } from 'primevue/tree'
 import isObject from 'lodash-es/isObject'
 import { unFlatten } from '../../utils/index'
-const slug = useRoute().params.slug as string
 
-const { data } = useTranslation(slug, { locale: 'en' })
+const route = useRoute()
 
-const selectedKey = ref<string[]>([])
+const slug = route.params.slug as string
+
+const qKey = route.query.key as string
+
+const { data } = useProjectTranslations(ref(slug), 'en')
+
+const selectedKey = ref<Record<string, boolean>>({})
+
+const projectStore = useProjectStore()
+
+watchEffect(() => {
+  if (qKey) {
+    selectedKey.value = {
+      [qKey]: true,
+    }
+  }
+})
+
+watch(
+  () => selectedKey.value,
+  (newVal) => {
+    if (Object.keys(newVal || {}).length > 0) {
+      projectStore.currentKey = Object.keys(newVal)[0]
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 
 const list = computed(() => {
   return data.value?.reduce((acc, item) => {
@@ -45,15 +72,14 @@ function genTree(lang: any, parentKey?: string): TreeProps['value'] {
   const tree = []
   for (let key in lang) {
     const value = lang[key]
+    const realKey = parentKey ? `${parentKey}.${key}` : key
     if (isObject(value)) {
-      const realKey = parentKey ? `${parentKey}.${key}` : key
       tree.push({
         label: key,
         key: realKey,
         children: genTree(value, realKey),
       })
     } else {
-      const realKey = parentKey
       tree.push({
         label: key,
         key: realKey,
@@ -67,11 +93,7 @@ function genTree(lang: any, parentKey?: string): TreeProps['value'] {
 const treeNodes = computed(() => {
   const obj = unFlatten(list.value)
 
-  console.log({ obj })
-
   const tree = genTree(obj)
-
-  // console.log({ tree })
 
   return tree
 })
