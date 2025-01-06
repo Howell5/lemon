@@ -20,7 +20,9 @@ const props = withDefaults(defineProps<Props>(), {
   currentKey: '',
 })
 
-// const projectStore = useProjectStore()
+const projectStore = useProjectStore()
+
+const project = computed(() => projectStore.project)
 
 const route = useRoute()
 
@@ -55,7 +57,12 @@ const innerLocales: Ref<Partial<Record<string, string>>> = ref({})
 watch(
   () => data.value,
   () => {
-    innerLocales.value = data.value?.reduce((acc, item) => {
+    if (!project.value || !data.value) return
+    const defaultLocale = project.value?.defaultLocale
+    const list = data.value?.sort((item) =>
+      item.locale === defaultLocale ? -1 : 1
+    )
+    innerLocales.value = list?.reduce((acc, item) => {
       acc[item.locale] = item.translation
       return acc
     }, {})
@@ -145,14 +152,18 @@ function confirmDraft() {
     [props.currentKey]: innerLocales.value,
   })
 }
+
+function changeLocaleValue(value: string, key: string) {
+  innerLocales.value[key] = value
+}
 </script>
 
 <template>
   <div class="h-full">
-    <div v-if="currentKey" class="p-4">
-      <div v-if="currentKey" class="mb-8">
+    <div v-if="currentKey" class="p-16">
+      <div v-if="currentKey" class="mb-32">
         <div class="flex justify-between items-center gap-2">
-          <h2 class="font-medium text-[16px] mb-3">`{{ currentKey }}`</h2>
+          <h2 class="font-medium text-16 mb-12">`{{ currentKey }}`</h2>
           <AlertDialog
             title="你确定要删除这个 Key 值吗？"
             content="除非你知道确切会发生什么，否则不要删除 Key 值。"
@@ -162,10 +173,11 @@ function confirmDraft() {
           </AlertDialog>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-12">
           <Button
             size="small"
             disabled
+            rounded
             class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
             @click="translateAllMissing"
           >
@@ -174,6 +186,7 @@ function confirmDraft() {
 
           <Button
             size="small"
+            rounded
             class="bg-gradient-to-r from-green-500 to-teal-500 text-white"
             @click="modifyKey"
           >
@@ -182,6 +195,7 @@ function confirmDraft() {
 
           <Button
             size="small"
+            rounded
             class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white"
             @click="forkKey"
           >
@@ -189,6 +203,7 @@ function confirmDraft() {
           </Button>
 
           <Button
+            rounded
             size="small"
             class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
             @click="fallbackAllMissing"
@@ -198,6 +213,7 @@ function confirmDraft() {
 
           <Button
             size="small"
+            rounded
             class="bg-gradient-to-r from-purple-500 to-pink-500 text-white"
             @click="clearAll"
           >
@@ -207,19 +223,18 @@ function confirmDraft() {
       </div>
 
       <div
-        v-for="[key, value] in Object.entries(innerLocales)"
+        v-for="(value, key) in innerLocales"
         :key="key"
-        class="flex items-center mt-2 gap-4"
+        class="flex items-center mt-8 gap-12"
       >
         <label for="input" class="min-w-[40px]">{{ key }}</label>
         <Input
           class="flex-1"
           :model-value="value"
-          @update:model-value="(val) => change(key as KeyofBaiduLocales, val)"
+          @update:model-value="changeLocaleValue($event, key)"
         />
         <Button
           v-if="key !== 'en'"
-          variant="outline"
           @click="() => handleTranslate(key as KeyofBaiduLocales)"
         >
           Translate
@@ -230,7 +245,7 @@ function confirmDraft() {
         若要使得翻译生效，请点击"保存草稿"之后再点击"发布"按钮。
       </div>
 
-      <div class="flex flex-row-reverse mt-4 gap-4">
+      <div class="flex flex-row-reverse mt-8 gap-12">
         <Button @click="emit('publish')">发布</Button>
       </div>
 

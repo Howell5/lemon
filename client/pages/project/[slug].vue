@@ -24,9 +24,11 @@ const route = useRoute()
 
 const projectStore = useProjectStore()
 
+const project = computed(() => projectStore.project)
+
 const slug = route.params.slug as string
 
-const { project } = useProject(slug)
+// const { project } = useProject(slug)
 </script>
 
 <style scoped></style>

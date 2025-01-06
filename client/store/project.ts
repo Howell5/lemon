@@ -1,5 +1,8 @@
 export const useProjectStore = defineStore('project', () => {
-  const project = ref<any>(null)
+  const route = useRoute()
+  const slug = route.params.slug as string
+
+  const { project } = useProject(slug)
 
   const currentKey = ref('')
 
