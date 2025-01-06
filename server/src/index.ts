@@ -20,5 +20,6 @@ console.log(`Server is running on port ${port}`)
 
 serve({
   fetch: app.fetch,
+  hostname: 'local.lemon.me',
   port: Number(port),
 })

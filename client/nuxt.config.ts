@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE || 'http://localhost:5000',
+      apiBase: process.env.API_BASE || 'http://local.lemon.me:5000',
     },
   },
 
