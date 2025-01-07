@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 
   devServer: {
     host: 'local.lemon.me',
-    port: 3000,
+    port: 5760,
   },
 
   components: [

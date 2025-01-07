@@ -165,12 +165,24 @@ function changeLocaleValue(value: string, key: string) {
       <div v-if="currentKey" class="mb-32px">
         <div class="flex justify-between items-center gap-2px">
           <h2 class="font-medium text-16px mb-12px">`{{ currentKey }}`</h2>
-          <AlertDialog
-            title="你确定要删除这个 Key 值吗？"
-            content="除非你知道确切会发生什么，否则不要删除 Key 值。"
-            @continue="deleteKey"
-          >
-            <Button size="sm" variant="destructive">删除该 Key 值</Button>
+          <AlertDialog>
+            <AlertDialogTrigger as-child>
+              <Button size="sm" variant="destructive">删除该 Key 值</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>你确定要删除这个 Key 值吗？</AlertDialogTitle>
+                <AlertDialogDescription>
+                  除非你知道确切会发生什么，否则不要删除 Key 值。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction @click="deleteKey">
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
           </AlertDialog>
         </div>
 

@@ -1,13 +1,13 @@
 <template>
   <div class="flex-c-c gap-12px">
     <div class="flex flex-col gap-4px">
-      <div class="h-140px">
+      <div class="h-152px">
         <h1>{{ project?.name }}</h1>
         <div>{{ project?.description }}</div>
       </div>
 
       <div
-        class="h-[calc(100dvh-160px)] overflow-y-auto w-350px rounded-lg border"
+        class="h-[calc(100dvh-184px)] overflow-y-auto w-350px rounded-lg border"
       >
         <KeyTree />
       </div>

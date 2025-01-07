@@ -2,7 +2,7 @@
 export interface TreeItem {
   title: string
   icon?: string
-  key?: string
+  key: string
   isLeaf?: boolean
   children?: TreeItem[]
 }
@@ -26,23 +26,22 @@ const getItemPath = (item: TreeItem) => {
 const hasChildren = (item: TreeItem) =>
   item.children && item.children.length > 0
 
-function toggle(item: TreeItem) {
-  const path = getItemPath(item)
+function toggle(item: TreeItem, path: string) {
   emit('toggle', item, path)
 }
 </script>
 
 <template>
   <ul class="min-w-200px select-none">
-    <li v-for="item in items" :key="item.title" class="relative">
+    <li v-for="item in items" :key="item.title" class="relative my-2px">
       <div
-        class="flex items-center py-4px px-8px rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer"
+        class="flex items-center py-4px px-8px rounded-md hover:bg-neutral-900 hover:text-white cursor-pointer"
         :class="{
           'pl-[calc(0.5rem_+_var(--level)_*_1rem)]': level > 0,
-          'bg-accent': item.isLeaf && item.key === currentKey,
+          'bg-neutral-900 text-white': item.isLeaf && item.key === currentKey,
         }"
         :style="{ '--level': level }"
-        @click="toggle(item)"
+        @click="toggle(item, getItemPath(item))"
       >
         <template v-if="hasChildren(item)">
           <span class="mr-4px h-16px w-16px shrink-0">
@@ -82,7 +81,7 @@ function toggle(item: TreeItem) {
           :level="level + 1"
           :expanded-items="expandedItems"
           :parent-path="getItemPath(item)"
-          @toggle="toggle($event)"
+          @toggle="(item, path) => toggle(item, path)"
         />
       </template>
     </li>

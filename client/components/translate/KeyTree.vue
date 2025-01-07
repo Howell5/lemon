@@ -1,6 +1,11 @@
 <template>
   <div class="flex flex-col gap-4px">
-    <Tree v-model:selected-key="selectedKey" :items="treeNodes" />
+    <Tree
+      v-model:selected-key="selectedKey"
+      :items="treeNodes"
+      virtual
+      :height="`calc(100dvh-184px)`"
+    />
   </div>
 </template>
 

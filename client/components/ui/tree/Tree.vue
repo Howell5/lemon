@@ -6,7 +6,7 @@ interface TreeItem {
   icon?: string
   isLeaf?: boolean
   children?: TreeItem[]
-  key?: string
+  key: string
 }
 
 defineProps<{
@@ -43,6 +43,7 @@ const getItemPath = (item: TreeItem, parentPath = '') => {
         :level="0"
         @toggle="toggleExpand"
         :expanded-items="isExpanded"
+        :current-key="currentKey"
       />
     </div>
   </div>
