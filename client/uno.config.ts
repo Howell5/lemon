@@ -4,7 +4,7 @@ import presetRemToPx from '@unocss/preset-rem-to-px'
 export default defineConfig({
   presets: [
     presetRemToPx({
-      baseFontSize: 4,
+      baseFontSize: 16,
     }),
     presetAttributify(),
     presetUno(),

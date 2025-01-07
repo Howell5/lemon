@@ -1,33 +1,13 @@
 <template>
-  <div class="flex flex-col gap-4">
-    <Tree
-      v-model:selectionKeys="selectedKey"
-      :value="treeNodes"
-      selectionMode="single"
-      :metaKeySelection="true"
-    />
-    <!-- <ul v-for="item in treeNodes" :key="item.key">
-      <template v-if="item.children">
-        <div>
-          <span>{{ item.label }}</span>
-          <ul>
-            <li v-for="child in item.children" :key="child.key">
-              {{ child.label }}
-            </li>
-          </ul>
-        </div>
-      </template>
-      <template v-else>
-        <li>{{ item.label }}</li>
-      </template>
-    </ul> -->
+  <div class="flex flex-col gap-4px">
+    <Tree v-model:selected-key="selectedKey" :items="treeNodes" />
   </div>
 </template>
 
 <script setup lang="ts">
-import Tree, { type TreeProps } from 'primevue/tree'
+import { Tree, type TreeItem } from '@/components/ui/tree'
 import isObject from 'lodash-es/isObject'
-import { unFlatten } from '../../utils/index'
+import { unFlatten } from '@/utils/index'
 
 const route = useRoute()
 
@@ -37,23 +17,23 @@ const qKey = route.query.key as string
 
 const { data } = useProjectTranslations(ref(slug), 'en')
 
-const selectedKey = ref<Record<string, boolean>>({})
+const selectedKey = ref<string>('')
 
 const projectStore = useProjectStore()
 
-watchEffect(() => {
-  if (qKey) {
-    selectedKey.value = {
-      [qKey]: true,
-    }
-  }
-})
+// watchEffect(() => {
+//   if (qKey) {
+//     selectedKey.value = {
+//       [qKey]: true,
+//     }
+//   }
+// })
 
 watch(
   () => selectedKey.value,
   (newVal) => {
-    if (Object.keys(newVal || {}).length > 0) {
-      projectStore.currentKey = Object.keys(newVal)[0]
+    if (newVal) {
+      projectStore.currentKey = newVal
     }
   },
   {
@@ -68,20 +48,20 @@ const list = computed(() => {
   }, {})
 })
 
-function genTree(lang: any, parentKey?: string): TreeProps['value'] {
-  const tree = []
-  for (let key in lang) {
+function genTree(lang: any, parentKey?: string): TreeItem[] {
+  const tree: TreeItem[] = []
+  for (const key in lang) {
     const value = lang[key]
     const realKey = parentKey ? `${parentKey}.${key}` : key
     if (isObject(value)) {
       tree.push({
-        label: key,
+        title: key,
         key: realKey,
         children: genTree(value, realKey),
       })
     } else {
       tree.push({
-        label: key,
+        title: key,
         key: realKey,
         isLeaf: true,
       })
@@ -93,7 +73,11 @@ function genTree(lang: any, parentKey?: string): TreeProps['value'] {
 const treeNodes = computed(() => {
   const obj = unFlatten(list.value)
 
+  console.log({ obj })
+
   const tree = genTree(obj)
+
+  console.log({ tree })
 
   return tree
 })

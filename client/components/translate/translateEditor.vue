@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue'
-import Button from 'primevue/button'
-import Input from 'primevue/inputtext'
-import AlertDialog from 'primevue/dialog'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { AlertDialog } from '@/components/ui/alert-dialog'
 
 // import {
 //   baiduTranslate,
@@ -160,22 +161,22 @@ function changeLocaleValue(value: string, key: string) {
 
 <template>
   <div class="h-full">
-    <div v-if="currentKey" class="p-16">
-      <div v-if="currentKey" class="mb-32">
-        <div class="flex justify-between items-center gap-2">
-          <h2 class="font-medium text-16 mb-12">`{{ currentKey }}`</h2>
+    <div v-if="currentKey" class="p-16px">
+      <div v-if="currentKey" class="mb-32px">
+        <div class="flex justify-between items-center gap-2px">
+          <h2 class="font-medium text-16px mb-12px">`{{ currentKey }}`</h2>
           <AlertDialog
             title="你确定要删除这个 Key 值吗？"
             content="除非你知道确切会发生什么，否则不要删除 Key 值。"
             @continue="deleteKey"
           >
-            <Button size="small" label="danger">删除该 Key 值</Button>
+            <Button size="sm" variant="destructive">删除该 Key 值</Button>
           </AlertDialog>
         </div>
 
-        <div class="flex items-center gap-12">
+        <div class="flex items-center gap-12px">
           <Button
-            size="small"
+            size="sm"
             disabled
             rounded
             class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
@@ -185,7 +186,7 @@ function changeLocaleValue(value: string, key: string) {
           </Button>
 
           <Button
-            size="small"
+            size="sm"
             rounded
             class="bg-gradient-to-r from-green-500 to-teal-500 text-white"
             @click="modifyKey"
@@ -194,7 +195,7 @@ function changeLocaleValue(value: string, key: string) {
           </Button>
 
           <Button
-            size="small"
+            size="sm"
             rounded
             class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white"
             @click="forkKey"
@@ -204,7 +205,7 @@ function changeLocaleValue(value: string, key: string) {
 
           <Button
             rounded
-            size="small"
+            size="sm"
             class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
             @click="fallbackAllMissing"
           >
@@ -212,7 +213,7 @@ function changeLocaleValue(value: string, key: string) {
           </Button>
 
           <Button
-            size="small"
+            size="sm"
             rounded
             class="bg-gradient-to-r from-purple-500 to-pink-500 text-white"
             @click="clearAll"
@@ -225,7 +226,7 @@ function changeLocaleValue(value: string, key: string) {
       <div
         v-for="(value, key) in innerLocales"
         :key="key"
-        class="flex items-center mt-8 gap-12"
+        class="flex items-center mt-8px gap-12px"
       >
         <label for="input" class="min-w-[40px]">{{ key }}</label>
         <Input
@@ -241,16 +242,16 @@ function changeLocaleValue(value: string, key: string) {
         </Button>
       </div>
 
-      <div class="flex flex-row-reverse mt-20">
-        若要使得翻译生效，请点击"保存草稿"之后再点击"发布"按钮。
+      <div class="flex flex-row-reverse mt-20px">
+        若要使得翻译生效，请点击"发布"按钮。
       </div>
 
-      <div class="flex flex-row-reverse mt-8 gap-12">
+      <div class="flex flex-row-reverse mt-8px gap-12px">
         <Button @click="emit('publish')">发布</Button>
       </div>
 
-      <div class="leading-relaxed mt-12">
-        <h2 class="font-medium text-20">使用提示:</h2>
+      <div class="leading-relaxed mt-12px">
+        <h2 class="font-medium text-20px">使用提示:</h2>
         <ul>
           <li>
             1.

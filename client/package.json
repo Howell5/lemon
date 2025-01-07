@@ -10,22 +10,33 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@nuxt/icon": "^1.10.3",
+    "@nuxtjs/color-mode": "^3.5.2",
     "@pinia/nuxt": "^0.6.1",
-    "@primevue/themes": "^4.2.5",
     "@tanstack/vue-query": "^5.59.20",
+    "@vee-validate/zod": "^4.15.0",
+    "@vueuse/core": "^12.3.0",
     "@vueuse/nuxt": "^11.2.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lodash-es": "^4.17.21",
+    "lucide-vue-next": "^0.469.0",
     "nuxt": "^3.13.2",
-    "primevue": "^4.2.5",
+    "radix-vue": "^1.9.12",
+    "shadcn-nuxt": "0.11.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vee-validate": "^4.15.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@primevue/nuxt-module": "^4.2.5",
+    "@nuxtjs/tailwindcss": "^6.12.2",
     "@types/lodash-es": "^4.17.12",
     "@unocss/nuxt": "^0.65.2",
     "@unocss/preset-rem-to-px": "^0.65.2",
+    "typescript": "^5.6.3",
     "unocss": "^0.65.2"
   }
 }

@@ -1,4 +1,5 @@
-import Aura from '@primevue/themes/aura'
+import { resolve } from 'path'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -8,7 +9,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@unocss/nuxt',
     '@vueuse/nuxt',
-    '@primevue/nuxt-module',
+    'shadcn-nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxt/icon',
   ],
 
   runtimeConfig: {
@@ -38,18 +41,9 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '@': '../',
-  },
-
-  primevue: {
-    options: {
-      theme: {
-        preset: Aura,
-        options: {
-          darkModeSelector: 'system',
-        },
-      },
-    },
+    '@client': resolve(__dirname, './'),
+    '@server': resolve(__dirname, '../server/src'),
+    '@shared': resolve(__dirname, '../shared'),
   },
 
   compatibilityDate: '2024-11-03',
