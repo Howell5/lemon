@@ -47,11 +47,21 @@ export class TranslationController {
 
     const { projectName, key } = body
 
+    // 处理转义字符，将 \" 转换为 "
+    const processedKey = key.replace(/\\"/g, '"')
+
+    console.log({
+      processedKey,
+    })
+
     if (!projectName) {
       return c.json({ message: 'project name is required' }, 400)
     }
 
-    const translation = await translationService.findAllByKey(projectName, key)
+    const translation = await translationService.findAllByKey(
+      projectName,
+      processedKey // 使用处理后的 key
+    )
     return c.json(translation)
   }
 

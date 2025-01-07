@@ -6,7 +6,7 @@ export const useProjectApi = () => {
 
   return {
     list() {
-      return api.get<Project[]>('/api/project')
+      return api.get<Project[]>('/api/project/list')
     },
 
     get(slug: string) {

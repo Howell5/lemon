@@ -12,27 +12,14 @@
 <script setup lang="ts">
 import { Tree, type TreeItem } from '@/components/ui/tree'
 import isObject from 'lodash-es/isObject'
-import { unFlatten } from '@/utils/index'
-
-const route = useRoute()
-
-const slug = route.params.slug as string
-
-const qKey = route.query.key as string
-
-const { data } = useProjectTranslations(ref(slug), 'en')
-
-const selectedKey = ref<string>('')
 
 const projectStore = useProjectStore()
 
-// watchEffect(() => {
-//   if (qKey) {
-//     selectedKey.value = {
-//       [qKey]: true,
-//     }
-//   }
-// })
+const slug = computed(() => projectStore.currentProjectSlug)
+
+const { data } = useProjectTranslations(slug, 'en')
+
+const selectedKey = ref<string>('')
 
 watch(
   () => selectedKey.value,
@@ -76,13 +63,7 @@ function genTree(lang: any, parentKey?: string): TreeItem[] {
 }
 
 const treeNodes = computed(() => {
-  const obj = unFlatten(list.value)
-
-  console.log({ obj })
-
-  const tree = genTree(obj)
-
-  console.log({ tree })
+  const tree = genTree(list.value)
 
   return tree
 })

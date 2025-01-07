@@ -68,6 +68,9 @@ importers:
       '@vueuse/nuxt':
         specifier: ^11.2.0
         version: 11.2.0(nuxt@3.13.2)(vue@3.5.12)
+      '@vueuse/router':
+        specifier: ^12.3.0
+        version: 12.3.0(typescript@5.6.3)(vue-router@4.4.5)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -3621,6 +3624,18 @@ packages:
       - supports-color
       - vue
       - webpack-sources
+    dev: false
+
+  /@vueuse/router@12.3.0(typescript@5.6.3)(vue-router@4.4.5):
+    resolution: {integrity: sha512-1DaH4SAkoNaEHHO2QedOksGZ+96e12wFxxT2hSJ1uWaghZJAjjS2xNKvl0hQdsFDZQ2iakLoAuIcuR5FHuoCCA==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
+    dependencies:
+      '@vueuse/shared': 12.3.0(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.6.3)
+      vue-router: 4.4.5(vue@3.5.12)
+    transitivePeerDependencies:
+      - typescript
     dev: false
 
   /@vueuse/shared@10.11.1(vue@3.5.12):

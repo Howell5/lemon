@@ -1,8 +1,12 @@
+import { useRouteParams } from '@vueuse/router'
+
 export const useProjectStore = defineStore('project', () => {
   const route = useRoute()
   const slug = route.params.slug as string
 
-  const { project } = useProject(slug)
+  const currentProjectSlug = useRouteParams('slug')
+
+  const { project } = useProject(currentProjectSlug)
 
   const currentKey = ref('')
 
@@ -12,5 +16,6 @@ export const useProjectStore = defineStore('project', () => {
     currentKey,
     project,
     localeMap,
+    currentProjectSlug,
   }
 })

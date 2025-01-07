@@ -30,3 +30,48 @@ export const SUPPORTED_LOCALE_MAP = {
   vi: 'vietnamese',
   zh: 'chinese',
 }
+
+export const localeInfoMap = {
+  ar: {
+    flag: '🇦🇪',
+  },
+  bg: {
+    flag: '🇧🇬',
+  },
+  cs: {
+    flag: '🇨🇿',
+  },
+  zh: {
+    flag: '🇨🇳',
+  },
+  en: {
+    flag: '🇺🇸',
+  },
+  es: {
+    flag: '🇪🇸',
+  },
+  ja: {
+    flag: '🇯🇵',
+  },
+  ko: {
+    flag: '🇰🇷',
+  },
+  nl: {
+    flag: '🇳🇱',
+  },
+  no: {
+    flag: '🇳🇴',
+  },
+  pl: {
+    flag: '🇵🇱',
+  },
+  pt: {
+    flag: '🇵🇹',
+  },
+  ru: {
+    flag: '🇷🇺',
+  },
+  tr: {
+    flag: '🇹🇷',
+  },
+}

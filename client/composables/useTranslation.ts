@@ -3,8 +3,6 @@ import { useQuery } from '@tanstack/vue-query'
 export const useTranslation = (slug: string, key: MaybeRef<string>) => {
   const translationApi = useTranslationApi()
 
-  console.log('00000000000000000000000000000000000', key)
-
   const { data } = useQuery({
     queryKey: [
       'translation',
