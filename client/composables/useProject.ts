@@ -42,7 +42,7 @@ export const userProjectList = () => {
 }
 
 export const useProjectTranslations = (
-  projectNameRef: MaybeRef<string>,
+  projectNameRef: MaybeRefOrGetter<string>,
   locale?: string
 ) => {
   const translationApi = useTranslationApi()
