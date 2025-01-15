@@ -10,8 +10,8 @@ export interface Translation {
   projectId: number
   key: string
   locale: string
+  isLeaf: boolean
   translation: string
-  context?: string
   createdAt: string
   updatedAt: string
 }

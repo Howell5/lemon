@@ -10,6 +10,7 @@ export interface CreateTranslationDto {
   key: string
   translation: string
   locale: string
+  isLeaf: boolean
 }
 
 export interface UpdateTranslationDto extends Partial<CreateTranslationDto> {

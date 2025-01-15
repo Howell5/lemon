@@ -1,12 +1,18 @@
 // services/translations.ts
 
 import { db } from '../db'
-import { eq, and } from 'drizzle-orm'
+import { eq, and, desc, asc } from 'drizzle-orm'
 import { projects, translations } from '../db/schema'
 import {
   CreateTranslationDto,
   UpdateTranslationDto,
 } from '../types/translation'
+
+interface FindOneTranslationDto {
+  projectId: number
+  key: string
+  locale: string
+}
 
 export class TranslationService {
   async create(dto: CreateTranslationDto) {
@@ -14,11 +20,27 @@ export class TranslationService {
     return translation
   }
 
-  async update(key: string, dto: UpdateTranslationDto) {
+  async findOne(dto: FindOneTranslationDto) {
+    const { projectId, key, locale } = dto
+    const translation = await db
+      .select()
+      .from(translations)
+      .where(
+        and(
+          eq(translations.projectId, Number(projectId)),
+          eq(translations.key, key),
+          eq(translations.locale, locale)
+        )
+      )
+      .then(([translation]) => translation)
+    return translation
+  }
+
+  async update(translationId: number, dto: UpdateTranslationDto) {
     const translation = await db
       .update(translations)
       .set(dto)
-      .where(eq(translations.key, key))
+      .where(eq(translations.id, translationId))
     return translation
   }
 
@@ -44,6 +66,7 @@ export class TranslationService {
           locale ? eq(translations.locale, locale) : undefined
         )
       )
+      .orderBy(asc(translations.key))
 
     return list
   }

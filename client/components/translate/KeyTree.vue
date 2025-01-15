@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { Tree, type TreeItem } from '@/components/ui/tree'
 import isObject from 'lodash-es/isObject'
-
+import { type Translation } from '@/../types/models/translation'
 const projectStore = useProjectStore()
 
 const slug = computed(() => projectStore.currentProjectSlug)
@@ -33,37 +33,76 @@ watch(
   }
 )
 
-const list = computed(() => {
-  return data.value?.reduce((acc, item) => {
-    acc[item.key] = item.translation
-    return acc
-  }, {})
+const unFlattened = computed(() => {
+  if (!data.value) return {}
+  const unFlattened = unFlatten(data.value)
+  // console.log({ unFlattened })
+  return unFlattened
 })
 
-function genTree(lang: any, parentKey?: string): TreeItem[] {
+const map = computed(() => {
+  if (!data.value) return {}
+  return data.value.reduce((acc, item) => {
+    acc[item.key] = {
+      isLeaf: item.isLeaf,
+      value: item.translation,
+      key: item.key,
+    }
+    return acc
+  }, {}) as Record<string, any>
+})
+
+function unFlatten(langs: Translation[]): Record<string, any> {
+  const result: Record<string, any> = {}
+  langs.forEach((item) => {
+    if (item.isLeaf) {
+      result[item.key] = item.translation
+    } else {
+      let current: Record<string, any> = result
+      const parts = item.key.split('.')
+
+      for (let i = 0; i < parts.length; i++) {
+        if (i === parts.length - 1) {
+          current[parts[i]] = item.translation
+        } else {
+          current = current[parts[i]] = current[parts[i]] || {}
+        }
+      }
+    }
+  })
+  return result
+}
+
+function genTree(langs: Record<string, any>, parentKey?: string): TreeItem[] {
   const tree: TreeItem[] = []
-  for (const key in lang) {
-    const value = lang[key]
-    const realKey = parentKey ? `${parentKey}.${key}` : key
-    if (isObject(value)) {
+
+  for (const key in langs) {
+    const item = langs[key]
+    const fullKey = `${parentKey ? `${parentKey}.` : ''}${key}`
+    if (isObject(item)) {
+      const mapItem = map.value?.[fullKey]
+      const realKey = mapItem?.key || fullKey
       tree.push({
-        title: key,
+        title: fullKey,
         key: realKey,
-        children: genTree(value, realKey),
+        isLeaf: false,
+        children: genTree(item, fullKey),
       })
     } else {
       tree.push({
         title: key,
-        key: realKey,
+        key: fullKey,
         isLeaf: true,
       })
     }
   }
+
   return tree
 }
 
 const treeNodes = computed(() => {
-  const tree = genTree(list.value)
+  if (!unFlattened.value) return []
+  const tree = genTree(unFlattened.value)
 
   return tree
 })

@@ -114,17 +114,35 @@ export class TranslationController {
       }
 
       const flattened = flatten(json)
-      for (const [key, value] of Object.entries(flattened)) {
-        const payload = {
-          projectId: project.id,
-          key,
-          translation: value,
-          locale,
-        }
 
-        console.log('0000000000000000000', payload)
-        await translationService.create(payload)
-      }
+      console.log({
+        flattened,
+      })
+
+      // for (const key in flattened) {
+      //   const { isLeaf, value } = flattened[key]
+      //   const payload = {
+      //     projectId: project.id,
+      //     key,
+      //     isLeaf,
+      //     translation: value,
+      //     locale,
+      //   }
+
+      //   const exist = await translationService.findOne({
+      //     projectId: payload.projectId,
+      //     key: payload.key,
+      //     locale: payload.locale,
+      //   })
+      //   if (exist) {
+      //     console.log('update translation', { exist, payload })
+      //     await translationService.update(exist.id, payload)
+      //     continue
+      //   }
+      //   console.log('create translation', payload)
+
+      //   await translationService.create(payload)
+      // }
 
       return c.json({ message: 'Translations uploaded successfully' })
     } catch (error) {

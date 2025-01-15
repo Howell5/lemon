@@ -1,0 +1,1 @@
+ALTER TABLE "translations" ADD COLUMN "is_leaf" boolean DEFAULT false NOT NULL;

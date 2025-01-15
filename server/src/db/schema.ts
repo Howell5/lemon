@@ -6,6 +6,7 @@ import {
   text,
   timestamp,
   varchar,
+  boolean,
   json,
 } from 'drizzle-orm/pg-core'
 
@@ -39,6 +40,7 @@ export const translations = pgTable('translations', {
   key: text('key').notNull(),
   // one of enum Locale type
   locale: varchar('locale', { length: 30 }).notNull(),
+  isLeaf: boolean('is_leaf').notNull().default(false),
   // string
   translation: text('translation').notNull(),
   createdAt: timestamp('created_at').defaultNow(),

@@ -15,6 +15,13 @@
       "when": 1735139514360,
       "tag": "0001_luxuriant_chamber",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1736393335632,
+      "tag": "0002_nosy_harrier",
+      "breakpoints": true
     }
   ]
 }

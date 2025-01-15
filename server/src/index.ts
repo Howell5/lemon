@@ -4,6 +4,7 @@ import { cors } from 'hono/cors'
 import projectRoutes from './routes/projects'
 import translationRoutes from './routes/translations'
 import localesRoutes from './routes/locales'
+import translateRoutes from './routes/translate'
 
 const app = new Hono()
 
@@ -13,6 +14,7 @@ app.get('/', (c) => c.json({ message: 'Hello Lemon !' }))
 app.route('/api/project', projectRoutes)
 app.route('/api/translation', translationRoutes)
 app.route('/api/locale', localesRoutes)
+app.route('/api/translate', translateRoutes)
 
 const port = process.env.SERVER_PORT || 5000
 

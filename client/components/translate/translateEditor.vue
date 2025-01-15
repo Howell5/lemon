@@ -2,6 +2,7 @@
 import { ref, watch, type Ref } from 'vue'
 
 import { Button } from '@/components/ui/button'
+import { useAsyncQueue } from '@vueuse/core'
 import { Input } from '@/components/ui/input'
 import { AlertDialog } from '@/components/ui/alert-dialog'
 
@@ -21,6 +22,8 @@ const props = withDefaults(defineProps<Props>(), {
   currentKey: '',
 })
 
+const isLoading = ref(false)
+
 const projectStore = useProjectStore()
 
 const project = computed(() => projectStore.project)
@@ -31,7 +34,7 @@ const slug = route.params.slug as string
 
 const certainKey = computed(() => props.currentKey)
 
-const { data } = useTranslation(slug, certainKey)
+const { data, createMutation } = useTranslation(slug, certainKey)
 
 function baiduTranslate(enValue: string, from: string, to: string) {
   return Promise.resolve(enValue)
@@ -50,7 +53,6 @@ const baiduLocaleMap = {
 const emit = defineEmits<{
   'update:currentKey': [key: string]
   edit: [params: Record<string, any>, isDel?: boolean]
-  publish: []
 }>()
 
 const innerLocales: Ref<Partial<Record<string, string>>> = ref({})
@@ -157,6 +159,32 @@ function confirmDraft() {
 function changeLocaleValue(value: string, key: string) {
   innerLocales.value[key] = value
 }
+
+async function publish() {
+  try {
+    const inValid = Object.values(innerLocales.value).some((value) => !value)
+    if (inValid) {
+      alert('请填写完整')
+      return
+    }
+
+    const mutateAsyncs = data.value
+      ?.map((item) => {
+        const currentValue = innerLocales.value[item.locale]
+        if (!currentValue) return
+        return createMutation(item.id, currentValue)
+      })
+      .filter(Boolean)
+
+    isLoading.value = true
+    await Promise.all(mutateAsyncs ?? [])
+    alert('发布成功')
+  } catch (error) {
+    alert('发布失败')
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
 
 <template>
@@ -242,12 +270,14 @@ function changeLocaleValue(value: string, key: string) {
       >
         <label for="input" class="min-w-[40px]">{{ key }}</label>
         <Input
+          :disabled="isLoading"
           class="flex-1"
           :model-value="value"
-          @update:model-value="changeLocaleValue($event, key)"
+          @update:model-value="changeLocaleValue($event as string, key)"
         />
         <Button
           v-if="key !== 'en'"
+          :disabled="isLoading"
           @click="() => handleTranslate(key as KeyofBaiduLocales)"
         >
           Translate
@@ -259,7 +289,7 @@ function changeLocaleValue(value: string, key: string) {
       </div>
 
       <div class="flex flex-row-reverse mt-8px gap-12px">
-        <Button @click="emit('publish')">发布</Button>
+        <Button :disabled="isLoading" @click="publish">发布</Button>
       </div>
 
       <div class="leading-relaxed mt-12px">

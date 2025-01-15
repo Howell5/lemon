@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/vue-query'
 
-export const useProject = (slugRef: MaybeRef<string>) => {
+export const useProject = (slugRef: MaybeRefOrGetter<string>) => {
   const projectApi = useProjectApi()
   const { data } = useQuery({
     queryKey: computed(() => [
